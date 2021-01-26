@@ -1,20 +1,24 @@
 # serverless-test
 
-## Build Setup
+## Dev Setup
 
 ```bash
+# install Netlify Dev
+yarn add global netlify-cli
+
 # install dependencies
 $ yarn install
 
 # serve with hot reload at localhost:3000
-$ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
+$ netlify dev
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## Deploying to Netlify
+
+```bash
+# generate static project
+$ yarn generate
+
+# create a new site on Netlify
+netlify init
+```
