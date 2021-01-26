@@ -1,5 +1,7 @@
 # serverless-test
 
+https://blog.logrocket.com/using-serverless-functions-with-nuxt-js/
+
 ## Dev Setup
 
 ```bash
