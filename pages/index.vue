@@ -49,11 +49,14 @@ export default {
   async asyncData({ params, $http }) {
     const data = await $http.$get(`/.netlify/functions/load-exchange-data?base=EUR`)
     const date = data.date
-    const rates = Object.keys(data.rates).map(key => {
-      return {currency: key, rate: data.rates[key]}
-    })
     // actually push the 1:1 base/currency rate
-    rates.push({ currency: data.base, rate: 1})
+    data.rates[data.base] = 1
+
+    const rates = Object.keys(data.rates)
+      .sort((a, b) => a >= b)
+      .map(key => {
+        return {currency: key, rate: data.rates[key]}
+      })
   
     return { date, rates }
   },
@@ -63,13 +66,13 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.date = data.date
-          this.rates = Object.keys(data.rates).map(key => {
-            return {currency: key, rate: data.rates[key]}
-          })
-          if (!this.rates.find(r => r.currency === data.base)) {
-            // actually push the 1:1 base/currency rate
-            this.rates.push({ currency: data.base, rate: 1})
-          }
+          // actually push the 1:1 base/currency rate
+          data.rates[data.base] = 1
+          this.rates = Object.keys(data.rates)
+            .sort((a, b) => a >= b)
+            .map(key => {
+              return {currency: key, rate: data.rates[key]}
+            })
           // console.log('we have new rates for', data.base)
         })
         .catch(error => {
